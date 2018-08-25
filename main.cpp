@@ -7,6 +7,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <utility>
 #include "node.h"
 
 // Graph data is read from a csv file given as an argument to the program.
@@ -21,6 +22,7 @@ int main(int argc, char** argv)
 	std::stringstream stream;
 	std::string delimiter = ",";
 	std::vector<std::string> data;
+	std::vector<std::pair<std::string, std::string>> links;
 	std::string tempString;
 	while (std::getline(input, line) {
 		Node newNode();
@@ -34,8 +36,22 @@ int main(int argc, char** argv)
 				stream.ignore();
 			}
 		}
+
+		// Construct object from parsed data and add links to vector
+		newNode.setId(data[0]);
+		newNode.setValue(std::stoi(data[1]));
+		if (data.size() > 2) {
+			for (int i = 2; i < data.size(); i++) {
+				std::pair link(data[0],data[i]);
+				links.push_back(link);
+			}
+		}
 	}
 	input.close();
+
+	// Link nodes according to data
+	// Objects must be searchable by id. Save pointers to objects.
+	// TBD
 
 	return 0;
 }

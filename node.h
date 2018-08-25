@@ -16,6 +16,7 @@ public:
 	int addLink(std::string linkedId, Node* linkedPtr);
 	// int removeLink(std::string removeId);
 	std::string mapToString(void);
+	std::string toString(void);
 private:
 	std::string id;
 	unsigned int value;
