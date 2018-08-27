@@ -23,6 +23,7 @@ int main(int argc, char** argv)
 	std::string delimiter = ",";
 	std::vector<std::string> data;
 	std::vector<std::pair<std::string, std::string>> links;
+	std::vector<Node> nodes;
 	std::string tempString;
 	while (std::getline(input, line) {
 		Node newNode();
@@ -46,11 +47,18 @@ int main(int argc, char** argv)
 				links.push_back(link);
 			}
 		}
+
+		nodes.push_back(newNode);
 	}
 	input.close();
 
 	// Link nodes according to data
 	// Objects must be searchable by id. Save pointers to objects.
+	
+	// Go through the links list element by element
+	// Search nodes vector for element with id corresponding to links[0]
+	// Search nodes vector for element with id corresponding to links[1] and save it's address
+	// Add element to unordered_map for node
 	// TBD
 
 	return 0;
