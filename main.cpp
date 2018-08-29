@@ -3,7 +3,7 @@
  */
 
 #include <iostream>
-#include <ifstream>
+#include <fstream>
 #include <string>
 #include <sstream>
 #include <vector>
@@ -25,8 +25,8 @@ int main(int argc, char** argv)
 	std::vector<std::pair<std::string, std::string>> links;
 	std::vector<Node> nodes;
 	std::string tempString;
-	while (std::getline(input, line) {
-		Node newNode();
+	while (std::getline(input, line)) {
+		Node newNode;
 
 		// Parse csv data from file. One row equals one node data.
 		stream << line;
@@ -43,7 +43,7 @@ int main(int argc, char** argv)
 		newNode.setValue(std::stoi(data[1]));
 		if (data.size() > 2) {
 			for (int i = 2; i < data.size(); i++) {
-				std::pair link(data[0],data[i]);
+				std::pair<std::string, std::string> link(data[0],data[i]);
 				links.push_back(link);
 			}
 		}

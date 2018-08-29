@@ -21,4 +21,4 @@ private:
 	std::string id;
 	unsigned int value;
 	std::unordered_map<std::string, Node*> links;
-}
+};

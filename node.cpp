@@ -2,13 +2,13 @@
  * Aki Sipovaara 2018
  */
 
-#include <node.h>
+#include "node.h"
 
 Node::Node(void)
 {
 	id = "No id";
 	value = 0;
-	links(void); // ?
+	// links init?
 }
 
 int Node::setId(std::string newId)
