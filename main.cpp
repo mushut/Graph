@@ -29,13 +29,22 @@ int main(int argc, char** argv)
 		Node newNode;
 
 		// Parse csv data from file. One row equals one node data.
+		// DOES NOT WORK! TBD.
 		stream << line;
 		while (stream >> tempString) {
 			data.push_back(tempString);
 
-			if (stream.peek() == ',') {
-				stream.ignore();
+			char peekChar = stream.peek();
+			std::cout << peekChar << std::endl;			
+			if (peekChar == ',') {
+				stream.ignore(1);
 			}
+		}
+
+		// TESTING
+		std::cout << std::endl;
+		for (auto iterator = data.begin(); iterator != data.end(); ++iterator) {
+			std::cout << *iterator << std::endl;
 		}
 
 		// Construct object from parsed data and add links to vector
@@ -49,6 +58,7 @@ int main(int argc, char** argv)
 		}
 
 		nodes.push_back(newNode);
+		data.clear();
 	}
 	input.close();
 
