@@ -25,6 +25,38 @@ int main(int argc, char** argv)
 	std::vector<std::pair<std::string, std::string>> links;
 	std::vector<Node> nodes;
 	std::string tempString;
+
+	// Try std::getline(input, value, ',')
+	while (std::getline(input, line)) {
+		std::string value;
+		int index = 0;
+		Node newNode(index);
+
+		stream << line;
+		while(std::getline(stream, value, ',')) {
+			switch (index) {
+				case 0:
+					newNode.setId(value);
+					index++;
+					break;
+				case 1:
+					newNode.setValue(std::stoi(value));
+					index++;
+					break;
+				default:
+					// Save link data to links
+					// TBD
+					index++;	
+			}
+		}
+		nodes.push_back(newNode);
+	}
+
+	for (auto iterator = nodes.begin(); iterator != nodes.end(); ++iterator) {
+		std::cout << iterator->toString() << std::endl;
+	}
+
+	/*
 	while (std::getline(input, line)) {
 		Node newNode;
 
@@ -60,6 +92,7 @@ int main(int argc, char** argv)
 		nodes.push_back(newNode);
 		data.clear();
 	}
+	//*/
 	input.close();
 
 	// Link nodes according to data

@@ -8,6 +8,15 @@ Node::Node(void)
 {
 	id = "No id";
 	value = 0;
+	idNumber = -1;
+	// links init?
+}
+
+Node::Node(int newIdIndex)
+{
+	id = "No id";
+	value = 0;
+	idNumber = newIdIndex;
 	// links init?
 }
 

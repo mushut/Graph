@@ -9,6 +9,7 @@ class Node
 {
 public:
 	Node(void);
+	Node(int newIdNumber);
 	int setId(std::string newId);
 	std::string getId(void);
 	int setValue(unsigned int newValue);
@@ -19,6 +20,7 @@ public:
 	std::string toString(void);
 private:
 	std::string id;
+	int idNumber;
 	unsigned int value;
 	std::unordered_map<std::string, Node*> links;
 };
