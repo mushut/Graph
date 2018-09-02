@@ -31,12 +31,13 @@ int main(int argc, char** argv)
 	// Try std::getline(input, value, ',')
 	while (std::getline(input, line)) {
 		std::string value;
+		std::string linkFrom;
+		std::pair<std::string, std::string> linkPair;
 		int index = 0;
 		Node newNode(index);
 
 		stream << line;
 		while(std::getline(stream, value, ',')) {
-			std::string linkFrom;
 			switch (index) {
 				case 0:
 					newNode.setId(value);
@@ -49,11 +50,13 @@ int main(int argc, char** argv)
 					break;
 				default:
 					// Save link data to links
-					std::pair<std::string, std::string> linkPair(linkFrom, value);
+					linkPair(linkFrom, value);
 					links.push_back(linkPair);
 					index++;	
 			}
 		}
+		
+		// This must be done outside the while loop (at first there are no nodes...)
 		// Go through links and make node references accordingly
 		for (auto iterator = links.begin(); iterator != links.end(); ++iterator) {
 			std::pair<std::string, std::string> temp(*iterator);
