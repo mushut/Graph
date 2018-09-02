@@ -10,6 +10,7 @@
 #include <utility>
 #include "node.h"
 
+// NEEDS FUNCTIONS AND OOP APPROACH!
 // Graph data is read from a csv file given as an argument to the program.
 int main(int argc, char** argv)
 {
@@ -34,9 +35,11 @@ int main(int argc, char** argv)
 
 		stream << line;
 		while(std::getline(stream, value, ',')) {
+			std::string linkFrom;
 			switch (index) {
 				case 0:
 					newNode.setId(value);
+					linkFrom = value;
 					index++;
 					break;
 				case 1:
@@ -45,10 +48,13 @@ int main(int argc, char** argv)
 					break;
 				default:
 					// Save link data to links
-					// TBD
+					std::pair<std::string, std::string> linkPair(linkFrom, value);
+					links.push_back(linkPair);
 					index++;	
 			}
 		}
+		// Go through links and make node references accordingly
+
 		nodes.push_back(newNode);
 	}
 
