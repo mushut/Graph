@@ -9,7 +9,7 @@
 #include <vector>
 #include <utility>
 #include <algorithm>
-#include "node.h"
+#include "graph.h"
 
 // NEEDS FUNCTIONS AND OOP APPROACH!
 // Graph data is read from a csv file given as an argument to the program.
@@ -20,6 +20,11 @@ int main(int argc, char** argv)
 	std::ifstream input;
 	input.open(*(argv + 1), std::ifstream::in);
 
+	// New approach variables
+	Graph graph(1);
+	std::vector<std::vector<std::pair<std::string, std::string>>> nodesLinks;
+
+	// Old approch variables
 	std::string line;
 	std::stringstream stream;
 	std::string delimiter = ",";
@@ -28,7 +33,7 @@ int main(int argc, char** argv)
 	std::vector<Node> nodes;
 	std::string tempString;
 
-	// Try std::getline(input, value, ',')
+	// Read values from csv file
 	while (std::getline(input, line)) {
 		std::string value;
 		std::string linkFrom;
@@ -50,33 +55,40 @@ int main(int argc, char** argv)
 					break;
 				default:
 					// Save link data to links
-					linkPair(linkFrom, value);
+					linkPair = std::make_pair(linkFrom, value);
 					links.push_back(linkPair);
 					index++;	
 			}
 		}
-		
-		// This must be done outside the while loop (at first there are no nodes...)
-		// Go through links and make node references accordingly
-		for (auto iterator = links.begin(); iterator != links.end(); ++iterator) {
-			std::pair<std::string, std::string> temp(*iterator);
-			std::string from = temp.first;
-			std::string to = temp.second;
 
-			auto foundNode = find_if(nodes.begin(), nodes.end(), [&to](Node& tempNode) {return tempNode.getId() == to;});
-			if (foundNode != nodes.end()) {
-				newNode.addLink(to, &*foundNode);
-			}
-		}
+		nodesLinks.push_back(links);
 
 		nodes.push_back(newNode);
 	}
 
+	input.close();
+
+	// Create links according to csv file
+	for (auto iterNode = nodes.begin(); iterNode != nodes.end(); ++iterNode) {
+		for (auto iterator = nodesLinks.begin(); iterator != nodesLinks.end(); ++iterator) {
+			for (auto iterLinks = iterator->begin(); iterLinks != iterator->end(); ++iterLinks) {
+				std::pair<std::string, std::string> temp(*iterLinks);
+				std::string from = temp.first;
+				std::string to = temp.second;
+	
+				auto foundNode = find_if(nodes.begin(), nodes.end(), [&to](Node& tempNode) {return tempNode.getId() == to;});
+				if (foundNode != nodes.end()) {
+					iterNode->addLink(from, &*foundNode);
+				}
+			}
+		}
+	}
+
 	for (auto iterator = nodes.begin(); iterator != nodes.end(); ++iterator) {
-		std::cout << iterator->toString() << std::endl;
+		graph.addNode(*iterator);
 	}
 	
-	input.close();
+	std::cout << graph.toString();
 
 	return 0;
 }
