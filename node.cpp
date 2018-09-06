@@ -57,8 +57,8 @@ std::string Node::toString(void)
 	std::string result;
 
 	result = id + ", " + std::to_string(value);
-	for (auto& iterator : links) {
-		result += ", " + iterator.second->getId();	// Not sure if works
+	for (auto iterator = links.begin(); iterator != links.end(); ++iterator) {
+		result += ", " + iterator->second->getId();	// Not sure if works
 	}
 
 	return result;

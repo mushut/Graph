@@ -75,11 +75,12 @@ int main(int argc, char** argv)
 
 	input.close();
 
+	int linksIndex = 0;
 	// Create links according to csv file
 	for (auto iterNode = nodes.begin(); iterNode != nodes.end(); ++iterNode) {
 		for (auto iterator = nodesLinks.begin(); iterator != nodesLinks.end(); ++iterator) {
-			for (auto iterLinks = iterator->begin(); iterLinks != iterator->end(); ++iterLinks) {
-				std::pair<std::string, std::string> temp(*iterLinks);
+			for (auto iterLink = iterator->begin(); iterLink != iterator->end(); ++iterLink) {
+				std::pair<std::string, std::string> temp(*iterLink);
 				std::string from = temp.first;
 				std::string to = temp.second;
 	
@@ -92,7 +93,13 @@ int main(int argc, char** argv)
 				if (foundNode != nodes.end()) {
 					iterNode->addLink(from, &*foundNode);
 				}
-			}
+			}//*/
+			std::cout << linksIndex << std::endl;
+		}
+
+		++linksIndex;
+		if (linksIndex == nodesLinks.size()) {
+			linksIndex = 0;
 		}
 	}
 
