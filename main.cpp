@@ -4,16 +4,13 @@
 
 #include <iostream>
 #include <fstream>
+#include <istream>
 #include <string>
 #include <sstream>
 #include <vector>
 #include <utility>
 #include <algorithm>
 #include "graph.h"
-
-bool stringsMatch(std::string first, std::string second) {
-	return first.compare(second);
-}
 
 // NEEDS FUNCTIONS AND OOP APPROACH!
 // Graph data is read from a csv file given as an argument to the program.
@@ -29,53 +26,51 @@ int main(int argc, char** argv)
 	std::vector<std::vector<std::pair<std::string, std::string>>> nodesLinks;
 
 	// Old approch variables
-	std::string line;
 	std::stringstream stream;	// row
-	std::stringstream values;	// values
+	std::stringstream values;
 	std::string delimiter = ",";
 	std::vector<std::string> data;
 	std::vector<std::pair<std::string, std::string>> links;	// Are pairs needed actually?
 	std::vector<Node> nodes;
 	std::string tempString;
+	char line[256];
+	int nodeIdValue = 0;
 
 	// Read values from csv file
-	while (std::getline(input, line)) {
+	while (input.getline(line, 256, '\n')) {
 		std::string value;
-		std::string temp;
+		std::string temp(line);
 		std::string linkFrom;
 		std::pair<std::string, std::string> linkPair;
 		int index = 0;
-		Node newNode(index);
-
-		stream << line;
-		while(std::getline(stream, temp, '\n')) {
-			values << temp;
-			while(std::getline(values, value, ',')) {		
-				switch (index) {
-					case 0:
-						newNode.setId(value);
-						linkFrom = value;
-						index++;
-						value.clear();
-						break;
-					case 1:
-						newNode.setValue(std::stoi(value));
-						index++;
-						value.clear();
-						break;
-					default:
-						// Save link data to links
-						linkPair = std::make_pair(linkFrom, value);
-						links.push_back(linkPair);
-						index++;	
-						value.clear();
-				}
+		Node newNode(nodeIdValue);
+		values << temp;
+		while(std::getline(values, value, ',')) {		
+			switch (index) {
+				case 0:
+					newNode.setId(value);
+					linkFrom = value;
+					index++;
+					value.clear();
+					break;
+				case 1:
+					newNode.setValue(std::stoi(value));
+					index++;
+					value.clear();
+					break;
+				default:
+					// Save link data to links
+					linkPair = std::make_pair(linkFrom, value);
+					links.push_back(linkPair);
+					index++;	
+					value.clear();
 			}
-	
-			nodesLinks.push_back(links);
-		
-			nodes.push_back(newNode);
 		}
+		nodesLinks.push_back(links);
+		
+		nodes.push_back(newNode);
+		++nodeIdValue;
+		values.clear();
 	}
 
 	input.close();
