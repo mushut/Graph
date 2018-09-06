@@ -11,6 +11,10 @@
 #include <algorithm>
 #include "graph.h"
 
+bool stringsMatch(std::string first, std::string second) {
+	return first.compare(second);
+}
+
 // NEEDS FUNCTIONS AND OOP APPROACH!
 // Graph data is read from a csv file given as an argument to the program.
 int main(int argc, char** argv)
@@ -26,7 +30,8 @@ int main(int argc, char** argv)
 
 	// Old approch variables
 	std::string line;
-	std::stringstream stream;
+	std::stringstream stream;	// row
+	std::stringstream values;	// values
 	std::string delimiter = ",";
 	std::vector<std::string> data;
 	std::vector<std::pair<std::string, std::string>> links;	// Are pairs needed actually?
@@ -36,34 +41,41 @@ int main(int argc, char** argv)
 	// Read values from csv file
 	while (std::getline(input, line)) {
 		std::string value;
+		std::string temp;
 		std::string linkFrom;
 		std::pair<std::string, std::string> linkPair;
 		int index = 0;
 		Node newNode(index);
 
 		stream << line;
-		while(std::getline(stream, value, ',')) {
-			switch (index) {
-				case 0:
-					newNode.setId(value);
-					linkFrom = value;
-					index++;
-					break;
-				case 1:
-					newNode.setValue(std::stoi(value));
-					index++;
-					break;
-				default:
-					// Save link data to links
-					linkPair = std::make_pair(linkFrom, value);
-					links.push_back(linkPair);
-					index++;	
+		while(std::getline(stream, temp, '\n')) {
+			values << temp;
+			while(std::getline(values, value, ',')) {		
+				switch (index) {
+					case 0:
+						newNode.setId(value);
+						linkFrom = value;
+						index++;
+						value.clear();
+						break;
+					case 1:
+						newNode.setValue(std::stoi(value));
+						index++;
+						value.clear();
+						break;
+					default:
+						// Save link data to links
+						linkPair = std::make_pair(linkFrom, value);
+						links.push_back(linkPair);
+						index++;	
+						value.clear();
+				}
 			}
+	
+			nodesLinks.push_back(links);
+		
+			nodes.push_back(newNode);
 		}
-
-		nodesLinks.push_back(links);
-
-		nodes.push_back(newNode);
 	}
 
 	input.close();
@@ -76,7 +88,12 @@ int main(int argc, char** argv)
 				std::string from = temp.first;
 				std::string to = temp.second;
 	
-				auto foundNode = find_if(nodes.begin(), nodes.end(), [&to](Node& tempNode) {return tempNode.getId() == to;});
+				auto foundNode = find_if(nodes.begin(), nodes.end(), 
+					[to](Node node)
+						{
+							std::string str(node.getId());
+							return str.compare(to) == 0;
+						});
 				if (foundNode != nodes.end()) {
 					iterNode->addLink(from, &*foundNode);
 				}
