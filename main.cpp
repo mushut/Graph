@@ -30,7 +30,7 @@ int main(int argc, char** argv)
 	std::stringstream values;
 	std::string delimiter = ",";
 	std::vector<std::string> data;
-	std::vector<std::pair<std::string, std::string>> links;	// Are pairs needed actually?
+	std::vector<std::pair<std::string, std::string>> links;
 	std::vector<Node> nodes;
 	std::string tempString;
 	char line[256];
