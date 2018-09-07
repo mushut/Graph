@@ -12,6 +12,15 @@
 #include <algorithm>
 #include "graph.h"
 
+// Graph data is read from a csv file given as an argument to the program.
+int main(int argc, char** argv)
+{
+	std::cout << "Graph" << std::endl;
+
+	return 0;
+}
+
+/*
 // NEEDS FUNCTIONS AND OOP APPROACH!
 // Graph data is read from a csv file given as an argument to the program.
 int main(int argc, char** argv)
@@ -93,7 +102,7 @@ int main(int argc, char** argv)
 				if (foundNode != nodes.end()) {
 					iterNode->addLink(from, &*foundNode);
 				}
-			}//*/
+			}
 			std::cout << linksIndex << std::endl;
 		}
 
@@ -110,4 +119,4 @@ int main(int argc, char** argv)
 	std::cout << graph.toString();
 
 	return 0;
-}
+}*/
