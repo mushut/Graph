@@ -11,11 +11,17 @@
 #include <utility>
 #include <algorithm>
 #include "graph.h"
+#include "csvReader.h"
 
 // Graph data is read from a csv file given as an argument to the program.
 int main(int argc, char** argv)
 {
 	std::cout << "Graph" << std::endl;
+
+	CsvReader csvReader(*(argv + 1);
+	Graph graph = *(csvReader.readFile());
+
+	std::cout << graph;
 
 	return 0;
 }
