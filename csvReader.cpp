@@ -12,16 +12,19 @@ CsvReader::CsvReader(std::string inputFile)
 Graph* CsvReader::readFile(void)
 {
 	Graph* result;
+	std::string *row;
 	input.open(input, std::ifstream::in);
 
-	while (
+	while (readRow(row)) {
+		// Do something with row
+	}
 
 	input.close();
 
 	return result;
 }
 
-bool CsvReader::readRow(std::string *output)
+bool readRow(std::string *output)
 {
 	bool result;
 	char line[256];
