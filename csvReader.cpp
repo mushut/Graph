@@ -6,33 +6,26 @@
 
 CsvReader::CsvReader(std::string inputFile)
 {
-	input = inputFile;
+	filename = inputFile;
 }
 
 Graph* CsvReader::readFile(void)
 {
 	Graph* result;
 	std::string *row;
-	input.open(input, std::ifstream::in);
+	char line[256];
 
-	while (readRow(row)) {
-		// Do something with row
+	input.open(filename, std::ifstream::in);
+
+	while (input.getline(line, 256, '\n')) {
+		*row = line;
+		row->empty();
 	}
 
 	input.close();
 
-	return result;
-}
-
-bool readRow(std::string *output)
-{
-	bool result;
-	char line[256];
-
-	input.getline(line, 256, '\n');
-
-	// Assign value to output
-	// TBD
-	
+	// For testing. Remove when testing is done
+	Graph temp(1);
+	*result = temp;
 	return result;
 }

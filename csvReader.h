@@ -13,8 +13,7 @@ class CsvReader
 public:
 	CsvReader(std::string inputFile);
 	Graph* readFile(void);
-	bool readRow(std::string *output);
 private:
 	std::string filename;
 	std::ifstream input;
-}
+};
