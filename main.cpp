@@ -17,6 +17,7 @@ int main(int argc, char** argv)
 {
 	std::cout << "Graph" << std::endl;
 
+	// Csvreader created with csv file as first argument
 	CsvReader csvReader(*(argv + 1));
 	Graph graph = *(csvReader.readFile());
 
